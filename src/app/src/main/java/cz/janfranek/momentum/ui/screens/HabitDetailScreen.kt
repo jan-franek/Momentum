@@ -29,11 +29,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cz.janfranek.momentum.R
 import cz.janfranek.momentum.ui.components.EditHabitDialog
 import cz.janfranek.momentum.ui.components.HabitHistoryStrip
 import cz.janfranek.momentum.ui.components.HistoryItem
+import cz.janfranek.momentum.ui.getLabelResourceId
 import cz.janfranek.momentum.ui.viewmodel.HabitViewModel
 
 /**
@@ -70,13 +72,19 @@ fun HabitDetailScreen(
 				navigationIcon = {
 					// Back Button
 					IconButton(onClick = onBack) {
-						Icon(painter = painterResource(id = R.drawable.ic_back), contentDescription = "Back")
+						Icon(
+							painter = painterResource(id = R.drawable.ic_back),
+							contentDescription = stringResource(R.string.back)
+						)
 					}
 				},
 				actions = {
 					// Edit Button
 					IconButton(onClick = { showEditDialog = true }) {
-						Icon(painter = painterResource(id = R.drawable.ic_edit), contentDescription = "Edit")
+						Icon(
+							painter = painterResource(id = R.drawable.ic_edit),
+							contentDescription = stringResource(R.string.edit)
+						)
 					}
 					// Delete Button
 					IconButton(onClick = {
@@ -85,7 +93,7 @@ fun HabitDetailScreen(
 					}) {
 						Icon(
 							painter = painterResource(id = R.drawable.ic_delete),
-							contentDescription = "Delete Habit"
+							contentDescription = stringResource(R.string.delete)
 						)
 					}
 				}
@@ -105,14 +113,17 @@ fun HabitDetailScreen(
 			) {
 				Column(modifier = Modifier.padding(16.dp)) {
 					Text(
-						"Target: ${safeHabit.target} ${safeHabit.unit}",
-						style = MaterialTheme.typography.titleMedium
-					)
-					Text(
-						"Batch Size: ${safeHabit.batchSize} ${safeHabit.unit}",
+						"${stringResource(R.string.detail_label_target)}: ${safeHabit.target} ${safeHabit.unit}",
 						style = MaterialTheme.typography.bodyMedium
 					)
-					Text("Type: ${safeHabit.type}", style = MaterialTheme.typography.bodySmall)
+					Text(
+						"${stringResource(R.string.detail_label_batch_size)}: ${safeHabit.batchSize} ${safeHabit.unit}",
+						style = MaterialTheme.typography.bodyMedium
+					)
+					Text(
+						"${stringResource(R.string.detail_label_type)}: ${stringResource(safeHabit.type.getLabelResourceId())}",
+						style = MaterialTheme.typography.bodyMedium
+					)
 				}
 			}
 
@@ -123,7 +134,11 @@ fun HabitDetailScreen(
 
 			Spacer(modifier = Modifier.height(24.dp))
 
-			Text("History", style = MaterialTheme.typography.titleLarge)
+			Text(
+				stringResource(R.string.detail_title_history),
+				style = MaterialTheme.typography.titleLarge
+			)
+
 			Spacer(modifier = Modifier.height(8.dp))
 
 			// Entry History List

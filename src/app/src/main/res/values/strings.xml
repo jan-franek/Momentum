@@ -1,3 +1,37 @@
 <resources>
     <string name="app_name">Momentum</string>
+
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+
+    <string name="dashboard_no_daily_habits_message">No daily habits.</string>
+    <string name="dashboard_no_weekly_habits_message">No weekly habits.</string>
+    <string name="dashboard_type_daily">Daily</string>
+    <string name="dashboard_type_weekly">Weekly</string>
+    <string name="dashboard_completed">Completed</string>
+    <string name="dashboard_button_description_new_habit">New Habit</string>
+
+    <string name="new_habit_title">New Habit</string>
+    <string name="new_habit_label_name">Habit Name</string>
+    <string name="new_habit_type_daily">Daily Habit</string>
+    <string name="new_habit_type_weekly">Weekly Habit</string>
+    <string name="new_habit_placeholder_name">e.g. Drink Water</string>
+    <string name="new_habit_label_target">Target Goal</string>
+    <string name="new_habit_placeholder_target">e.g. 2500</string>
+    <string name="new_habit_label_unit">Unit</string>
+    <string name="new_habit_placeholder_unit">e.g. ml, mins</string>
+    <string name="new_habit_label_batch_size">Batch Size</string>
+    <string name="new_habit_placeholder_batch_size">e.g. 250</string>
+    <string name="new_habit_hint_batch_size">Amount added with one click (+)</string>
+
+    <string name="detail_title_edit_habit">Edit Habit</string>
+    <string name="detail_label_target">Target</string>
+    <string name="detail_label_batch_size">Batch Size</string>
+    <string name="detail_label_type">Type</string>
+    <string name="detail_title_history">History</string>
+    <string name="detail_stat_last_7_days">Last 7 Days</string>
+    <string name="detail_stat_last_7_weeks">Last 7 Weeks</string>
 </resources>

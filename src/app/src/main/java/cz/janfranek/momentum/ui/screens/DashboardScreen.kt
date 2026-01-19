@@ -27,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cz.janfranek.momentum.R
 import cz.janfranek.momentum.data.HabitType
@@ -57,19 +58,19 @@ fun DashboardScreen(
 	Scaffold(
 		topBar = {
 			Column {
-				CenterAlignedTopAppBar(title = { Text("Momentum") })
+				CenterAlignedTopAppBar(title = { Text(stringResource(R.string.app_name)) })
 
 				// THE TABS
 				SecondaryTabRow(selectedTabIndex = selectedTabIndex) {
 					Tab(
 						selected = selectedTabIndex == 0,
 						onClick = { selectedTabIndex = 0 },
-						text = { Text("Daily") }
+						text = { Text(stringResource(R.string.dashboard_type_daily)) }
 					)
 					Tab(
 						selected = selectedTabIndex == 1,
 						onClick = { selectedTabIndex = 1 },
-						text = { Text("Weekly") }
+						text = { Text(stringResource(R.string.dashboard_type_weekly)) }
 					)
 				}
 			}
@@ -78,7 +79,7 @@ fun DashboardScreen(
 			FloatingActionButton(onClick = onAddHabitClick) {
 				Icon(
 					painter = painterResource(id = R.drawable.ic_add),
-					contentDescription = "Add Habit"
+					contentDescription = stringResource(R.string.dashboard_button_description_new_habit)
 				)
 			}
 		}
@@ -117,7 +118,8 @@ fun DashboardScreen(
 						contentAlignment = Alignment.Center
 					) {
 						Text(
-							text = if (selectedTabIndex == 0) "No daily habits" else "No weekly habits",
+							text = if (selectedTabIndex == 0) stringResource(R.string.dashboard_no_daily_habits_message)
+							else stringResource(R.string.dashboard_no_weekly_habits_message),
 							style = MaterialTheme.typography.bodyLarge,
 							color = MaterialTheme.colorScheme.onSurfaceVariant
 						)

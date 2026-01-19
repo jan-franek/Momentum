@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import cz.janfranek.momentum.R
@@ -52,7 +53,7 @@ fun AddHabitScreen(
 	Scaffold(
 		topBar = {
 			TopAppBar(
-				title = { Text("New Habit") }
+				title = { Text(stringResource(R.string.new_habit_title)) }
 			)
 		}
 	) { innerPadding ->
@@ -68,8 +69,8 @@ fun AddHabitScreen(
 			OutlinedTextField(
 				value = name,
 				onValueChange = { name = it },
-				label = { Text("Habit Name") },
-				placeholder = { Text("e.g. Drink Water") },
+				label = { Text(stringResource(R.string.new_habit_label_name)) },
+				placeholder = { Text(stringResource(R.string.new_habit_placeholder_name)) },
 				modifier = Modifier.fillMaxWidth(),
 				singleLine = true
 			)
@@ -79,7 +80,7 @@ fun AddHabitScreen(
 				FilterChip(
 					selected = type == HabitType.DAILY,
 					onClick = { type = HabitType.DAILY },
-					label = { Text("Daily Habit") },
+					label = { Text(stringResource(R.string.new_habit_type_daily)) },
 					leadingIcon = {
 						if (type == HabitType.DAILY) {
 							Icon(
@@ -92,7 +93,7 @@ fun AddHabitScreen(
 				FilterChip(
 					selected = type == HabitType.WEEKLY,
 					onClick = { type = HabitType.WEEKLY },
-					label = { Text("Weekly Habit") },
+					label = { Text(stringResource(R.string.new_habit_type_weekly)) },
 					leadingIcon = {
 						if (type == HabitType.WEEKLY) {
 							Icon(
@@ -119,8 +120,8 @@ fun AddHabitScreen(
 				OutlinedTextField(
 					value = unit,
 					onValueChange = { unit = it },
-					label = { Text("Unit") },
-					placeholder = { Text("ml, km") },
+					label = { Text(stringResource(R.string.new_habit_label_unit)) },
+					placeholder = { Text(stringResource(R.string.new_habit_placeholder_unit)) },
 					modifier = Modifier.weight(1f),
 					singleLine = true
 				)
@@ -130,9 +131,9 @@ fun AddHabitScreen(
 			OutlinedTextField(
 				value = batchStr,
 				onValueChange = { if (it.all { char -> char.isDigit() }) batchStr = it },
-				label = { Text("Amount per click") },
-				placeholder = { Text("e.g. 250") },
-				supportingText = { Text("How much to add when you click +") },
+				label = { Text(stringResource(R.string.new_habit_label_batch_size)) },
+				placeholder = { Text(stringResource(R.string.new_habit_placeholder_batch_size)) },
+				supportingText = { Text(stringResource(R.string.new_habit_hint_batch_size)) },
 				keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
 				modifier = Modifier.fillMaxWidth(),
 				singleLine = true
@@ -142,7 +143,7 @@ fun AddHabitScreen(
 
 			Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
 				OutlinedButton(onClick = onCancel, modifier = Modifier.weight(1f)) {
-					Text("Cancel")
+					Text(stringResource(R.string.cancel))
 				}
 				Button(
 					onClick = {
@@ -157,7 +158,7 @@ fun AddHabitScreen(
 					enabled = isValid,
 					modifier = Modifier.weight(1f)
 				) {
-					Text("Save")
+					Text(stringResource(R.string.save))
 				}
 			}
 		}

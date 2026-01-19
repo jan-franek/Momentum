@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cz.janfranek.momentum.R
@@ -75,7 +76,7 @@ fun HabitCard(
 
 				// The Text Counter
 				Text(
-					text = if (isFinished) "${state.progress} / ${habit.target} ${habit.unit} - Completed!"
+					text = if (isFinished) "${state.progress} / ${habit.target} ${habit.unit} - ${stringResource(R.string.dashboard_completed)}!"
 					else "${state.progress} / ${habit.target} ${habit.unit}",
 
 					style = MaterialTheme.typography.bodySmall,

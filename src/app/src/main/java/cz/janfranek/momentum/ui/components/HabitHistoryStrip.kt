@@ -11,12 +11,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import cz.janfranek.momentum.R
 import cz.janfranek.momentum.data.Habit
 import cz.janfranek.momentum.data.HabitEntry
 import cz.janfranek.momentum.data.HabitType
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.format.TextStyle
 import java.time.temporal.WeekFields
 import java.util.Locale
 
@@ -24,7 +27,7 @@ import java.util.Locale
  * Data class to hold the status of one circle
  */
 data class HistoryStatus(
-	val label: String,  // "M", "T" or "W42"
+	val label: String,
 	val isMet: Boolean
 )
 
@@ -43,7 +46,8 @@ fun HabitHistoryStrip(
 
 	Column(modifier = Modifier.fillMaxWidth()) {
 		Text(
-			text = if (habit.type == HabitType.DAILY) "Last 7 Days" else "Last 7 Weeks",
+			text = if (habit.type == HabitType.DAILY) stringResource(R.string.detail_stat_last_7_days)
+			else stringResource(R.string.detail_stat_last_7_weeks),
 			style = MaterialTheme.typography.titleMedium
 		)
 
@@ -84,8 +88,11 @@ private fun calculateHistory(habit: Habit, entries: List<HabitEntry>): List<Hist
 				.filter { it.timestamp in dayStart until dayEnd }
 				.sumOf { it.amount }
 
-			// Label: First letter of day name (e.g., M, T, W)
-			val label = dateToCheck.dayOfWeek.name.take(1)
+			// Get first letter of the day of the week
+			val label = dateToCheck.dayOfWeek.getDisplayName(
+				TextStyle.NARROW,
+				Locale.getDefault()
+			)
 
 			list.add(HistoryStatus(label, totalAmount >= habit.target))
 
@@ -103,7 +110,7 @@ private fun calculateHistory(habit: Habit, entries: List<HabitEntry>): List<Hist
 				.filter { it.timestamp in startOfWeek until endOfWeek }
 				.sumOf { it.amount }
 
-			// Label: "W" + Week Number
+			// Week Number
 			val weekNum = dateInWeekToCheck.get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear())
 
 			list.add(HistoryStatus("$weekNum.", totalAmount >= habit.target))

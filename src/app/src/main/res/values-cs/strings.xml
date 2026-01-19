@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Momentum</string>
+
+    <string name="back">Zpět</string>
+    <string name="cancel">Zrušit</string>
+    <string name="save">Uložit</string>
+    <string name="delete">Smazat</string>
+    <string name="edit">Upravit</string>
+
+    <string name="dashboard_no_daily_habits_message">Žadne denní zvyky.</string>
+    <string name="dashboard_no_weekly_habits_message">Žádné týdenní zvyky.</string>
+    <string name="dashboard_type_daily">Denní</string>
+    <string name="dashboard_type_weekly">Týdenní</string>
+    <string name="dashboard_completed">Splněno</string>
+    <string name="dashboard_button_description_new_habit">Nový zvyk</string>
+
+    <string name="new_habit_title">Nový zvyk</string>
+    <string name="new_habit_label_name">Název zvyku</string>
+    <string name="new_habit_type_daily">Denní zvyk</string>
+    <string name="new_habit_type_weekly">Týdenní zvyk</string>
+    <string name="new_habit_placeholder_name">např. Pít vodu</string>
+    <string name="new_habit_label_target">Cíl</string>
+    <string name="new_habit_placeholder_target">např. 2500</string>
+    <string name="new_habit_label_unit">Jednotka</string>
+    <string name="new_habit_placeholder_unit">např. ml, min</string>
+    <string name="new_habit_label_batch_size">Velikost dávky</string>
+    <string name="new_habit_placeholder_batch_size">např. 250</string>
+    <string name="new_habit_hint_batch_size">Množství přidané jedním kliknutím (+)</string>
+
+    <string name="detail_title_edit_habit">Upravit zvyk</string>
+    <string name="detail_label_target">Cíl</string>
+    <string name="detail_label_batch_size">Velikost dávky</string>
+    <string name="detail_label_type">Typ</string>
+    <string name="detail_title_history">Historie</string>
+    <string name="detail_stat_last_7_days">Posledních 7 dní</string>
+    <string name="detail_stat_last_7_weeks">Posledních 7 týdnů</string>
+</resources>
