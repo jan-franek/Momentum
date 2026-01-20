@@ -70,9 +70,20 @@ cz.janfranek.momentum
 
 ## 📸 Screenshots
 
-<img src="screenshots/dashboard.png" alt="Dashboard screenshot" width="300" />
-<img src="screenshots/detail.png" alt="Habit detail screenshot" width="300" />
-<img src="screenshots/new.png" alt="New habit screenshot" width="300" />
+<img src="screenshots/dashboard.png" alt="Dashboard screenshot" width="300" /><img src="screenshots/detail.png" alt="Habit detail screenshot" width="300" /><img src="screenshots/new.png" alt="New habit screenshot" width="300" />
+
+## 🔧 Future work
+
+* Custom push notifications
+* Prettify the dashboard
+* Option to backup data to cloud
+* Once-a-day batch job to keep better data for statistics since Target can change thus "Completed" task for the day is relative
+  * Better visualize historic data
+* Simple boolean habits
+* Timed habits with and in-app timer
+* Habit priority
+* Dashboard filter and custom ordering
+* Option to modify historic data
 
 ## 📄 License
 
