@@ -79,11 +79,16 @@ cz.janfranek.momentum
 * Option to backup data to cloud
 * Once-a-day batch job to keep better data for statistics since Target can change thus "Completed" task for the day is relative
   * Better visualize historic data
-* Simple boolean habits
-* Timed habits with and in-app timer
-* Habit priority
+* More habit types
+  * Simple boolean habits
+  * Timed habits with and in-app timer
+  * "Negative" habits
+* More habit properties
+  * Habit priority
+  * Minimal/optimal target
 * Dashboard filter and custom ordering
 * Option to modify historic data
+* Aggregate habit entries entered at the same time (to save db space)
 
 ## 📄 License
 
