@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -19,12 +20,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,7 +38,7 @@ import cz.janfranek.momentum.ui.components.EditHabitDialog
 import cz.janfranek.momentum.ui.components.HabitHistoryStrip
 import cz.janfranek.momentum.ui.components.HistoryItem
 import cz.janfranek.momentum.ui.getLabelResourceId
-import cz.janfranek.momentum.ui.viewmodel.HabitViewModel
+import cz.janfranek.momentum.ui.viewmodel.HabitDetailViewModel
 
 /**
  * Screen displaying the details of a specific habit, including its history and options to edit or delete it.
@@ -44,25 +46,23 @@ import cz.janfranek.momentum.ui.viewmodel.HabitViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitDetailScreen(
-	habitId: Int,
-	viewModel: HabitViewModel,
+	viewModel: HabitDetailViewModel,
 	onBack: () -> Unit,
-	onDeleteSuccess: () -> Unit
 ) {
-	// Collect the live data
-	val habit by viewModel.getHabitStream(habitId).collectAsState(initial = null)
-	val entries by viewModel.getEntriesStream(habitId).collectAsState(initial = emptyList())
+	// Collecting flows from VM
+	val habit by viewModel.habitState.collectAsState()
+	val entries by viewModel.historyState.collectAsState()
+	val historyStripItems by viewModel.historyStripState.collectAsState()
 
-	var showEditDialog by remember { mutableStateOf(false) }
+	var showEditDialog by rememberSaveable { mutableStateOf(false) }
+	var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
 
-	// Habit is null
 	if (habit == null) {
 		Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 			CircularProgressIndicator()
 		}
 		return
 	}
-
 	val safeHabit = habit!!
 
 	Scaffold(
@@ -87,10 +87,7 @@ fun HabitDetailScreen(
 						)
 					}
 					// Delete Button
-					IconButton(onClick = {
-						viewModel.deleteHabit(safeHabit)
-						onDeleteSuccess()
-					}) {
+					IconButton(onClick = { showDeleteDialog = true }) {
 						Icon(
 							painter = painterResource(id = R.drawable.ic_delete),
 							contentDescription = stringResource(R.string.delete)
@@ -130,7 +127,7 @@ fun HabitDetailScreen(
 			Spacer(modifier = Modifier.height(24.dp))
 
 			// History Strip
-			HabitHistoryStrip(habit = safeHabit, entries = entries)
+			HabitHistoryStrip(safeHabit, historyStripItems)
 
 			Spacer(modifier = Modifier.height(24.dp))
 
@@ -142,7 +139,10 @@ fun HabitDetailScreen(
 			Spacer(modifier = Modifier.height(8.dp))
 
 			// Entry History List
-			LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+			LazyColumn(
+				modifier = Modifier.weight(1f),
+				verticalArrangement = Arrangement.spacedBy(8.dp)
+			) {
 				items(entries) { entry ->
 					HistoryItem(entry = entry, onDelete = { viewModel.deleteEntry(entry) })
 				}
@@ -150,14 +150,40 @@ fun HabitDetailScreen(
 		}
 	}
 
-	// Edit Dialog Popup
+	// Dialogs
+	if (showDeleteDialog) {
+		AlertDialog(
+			onDismissRequest = { showDeleteDialog = false },
+			title = { Text(stringResource(R.string.delete)) },
+			text = { Text(stringResource(R.string.confirm_delete)) },
+			confirmButton = {
+				TextButton(
+					onClick = {
+						viewModel.deleteHabit()
+						showDeleteDialog = false
+						onBack()
+					}
+				) {
+					Text(
+						stringResource(R.string.delete),
+						color = MaterialTheme.colorScheme.error
+					)
+				}
+			},
+			dismissButton = {
+				TextButton(onClick = {
+					showDeleteDialog = false
+				}) { Text(stringResource(R.string.cancel)) }
+			}
+		)
+	}
+
 	if (showEditDialog) {
 		EditHabitDialog(
 			habit = safeHabit,
 			onDismiss = { showEditDialog = false },
-			onSave = { name, target, batch ->
-				// Create a copy of the habit with new values and save it
-				viewModel.updateHabit(safeHabit.copy(name = name, target = target, batchSize = batch))
+			onSave = { updatedHabit ->
+				viewModel.updateHabit(updatedHabit)
 				showEditDialog = false
 			}
 		)

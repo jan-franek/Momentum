@@ -5,6 +5,7 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
+    <string name="confirm_delete">Are you sure you want to delete this habit?</string>
     <string name="edit">Edit</string>
 
     <string name="dashboard_no_daily_habits_message">No daily habits.</string>

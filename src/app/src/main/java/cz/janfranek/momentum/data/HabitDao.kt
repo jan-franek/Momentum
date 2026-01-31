@@ -13,19 +13,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface HabitDao {
 	@Insert
-	suspend fun insertHabit(habit: Habit)
-
-	@Insert
-	suspend fun insertEntry(entry: HabitEntry)
+	suspend fun insert(habit: Habit)
 
 	@Update
-	suspend fun updateHabit(habit: Habit)
+	suspend fun update(habit: Habit)
 
 	@Delete
-	suspend fun deleteHabit(habit: Habit)
-
-	@Delete
-	suspend fun deleteEntry(entry: HabitEntry)
+	suspend fun delete(habit: Habit)
 
 	@Query(
 		"""
@@ -36,24 +30,13 @@ interface HabitDao {
 	)
 	fun getHabitStream(id: Int): Flow<Habit?>
 
-	// Get full history for one habit (newest first)
-	@Query(
-		"""
-		SELECT *
-		FROM habit_entry
-		WHERE habitId = :habitId
-		ORDER BY timestamp DESC
-		"""
-	)
-	fun getEntriesStream(habitId: Int): Flow<List<HabitEntry>>
-
 	@Query(
 		"""
 		SELECT *
 		FROM habit
 		"""
 	)
-	fun getAllHabits(): Flow<List<Habit>>
+	fun getAllHabitsStream(): Flow<List<Habit>>
 
 	// Sums the habit progress since a certain time
 	@Query(
@@ -66,25 +49,5 @@ interface HabitDao {
 	)
 	fun getProgress(habitId: Int, startTime: Long): Flow<Int?>
 
-	// Get ALL entries between two times
-	@Query(
-		"""
-    SELECT * 
-    FROM habit_entry
-    WHERE timestamp >= :start
-    AND timestamp <= :end
-    """
-	)
-	fun getEntriesForDateRange(start: Long, end: Long): Flow<List<HabitEntry>>
 
-	@Query(
-		"""
-    SELECT * FROM habit_entry
-    WHERE habitId = :habitId
-    AND timestamp >= :cutoff
-    ORDER BY timestamp DESC
-    LIMIT 1
-		"""
-	)
-	suspend fun getLastEntrySince(habitId: Int, cutoff: Long): HabitEntry?
 }

@@ -3,28 +3,28 @@ package cz.janfranek.momentum
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import cz.janfranek.momentum.data.MomentumDatabase
+import androidx.navigation.navArgument
+import cz.janfranek.momentum.ui.ViewModelFactory
 import cz.janfranek.momentum.ui.screens.AddHabitScreen
 import cz.janfranek.momentum.ui.screens.DashboardScreen
 import cz.janfranek.momentum.ui.screens.HabitDetailScreen
-import cz.janfranek.momentum.ui.viewmodel.HabitViewModel
-import cz.janfranek.momentum.ui.viewmodel.HabitViewModelFactory
+import cz.janfranek.momentum.ui.viewmodel.AddHabitViewModel
+import cz.janfranek.momentum.ui.viewmodel.DashboardViewModel
+import cz.janfranek.momentum.ui.viewmodel.HabitDetailViewModel
 
 /**
  * The main application composable that sets up navigation and screens.
  */
 @Composable
-fun MomentumApp() {
+fun MomentumNavHost() {
 	val navController = rememberNavController()
-
 	val context = LocalContext.current
-	val database = MomentumDatabase.getDatabase(context)
-	val viewModel: HabitViewModel = viewModel(
-		factory = HabitViewModelFactory(database.habitDao())
-	)
+	val app = context.applicationContext as MomentumApplication
+	val factory = ViewModelFactory(app.repository)
 
 	NavHost(
 		navController = navController,
@@ -33,6 +33,8 @@ fun MomentumApp() {
 
 		// SCREEN 1: DASHBOARD
 		composable("dashboard") {
+			val viewModel: DashboardViewModel = viewModel(factory = factory)
+
 			DashboardScreen(
 				viewModel = viewModel,
 				onAddHabitClick = {
@@ -46,12 +48,11 @@ fun MomentumApp() {
 
 		// SCREEN 2: ADD HABIT
 		composable("add_habit") {
+			val viewModel: AddHabitViewModel = viewModel(factory = factory)
+
 			AddHabitScreen(
-				onSave = { name, type, target, unit, batchSize ->
-					viewModel.addHabit(name, type, target, unit, batchSize)
-					navController.popBackStack()
-				},
-				onCancel = {
+				viewModel = viewModel,
+				onBack = {
 					navController.popBackStack()
 				}
 			)
@@ -60,17 +61,15 @@ fun MomentumApp() {
 		// SCREEN 3: HABIT DETAIL
 		composable(
 			route = "detail/{habitId}",
-			arguments = listOf(androidx.navigation.navArgument("habitId") {
-				type = androidx.navigation.NavType.IntType
+			arguments = listOf(navArgument("habitId") {
+				type = NavType.IntType
 			})
 		) { backStackEntry ->
-			val habitId = backStackEntry.arguments?.getInt("habitId") ?: return@composable
+			val viewModel: HabitDetailViewModel = viewModel(factory = factory)
 
 			HabitDetailScreen(
-				habitId = habitId,
 				viewModel = viewModel,
-				onBack = { navController.popBackStack() },
-				onDeleteSuccess = { navController.popBackStack() }
+				onBack = { navController.popBackStack() }
 			)
 		}
 	}

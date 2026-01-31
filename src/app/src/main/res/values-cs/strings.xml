@@ -5,6 +5,7 @@
     <string name="cancel">Zrušit</string>
     <string name="save">Uložit</string>
     <string name="delete">Smazat</string>
+    <string name="confirm_delete">Opravdu chcete smazat tento zvyk?</string>
     <string name="edit">Upravit</string>
 
     <string name="dashboard_no_daily_habits_message">Žadne denní zvyky.</string>

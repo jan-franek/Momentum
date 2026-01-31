@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cz.janfranek.momentum.ui.state.HistoryStatus
 
 /**
  * A composable that displays a single history circle indicating whether the habit was met.

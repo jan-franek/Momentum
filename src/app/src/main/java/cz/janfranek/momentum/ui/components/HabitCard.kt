@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cz.janfranek.momentum.R
-import cz.janfranek.momentum.ui.viewmodel.HabitUiState
+import cz.janfranek.momentum.ui.state.HabitUiState
 
 /**
  * A card component that displays a habit's information and progress.
@@ -76,7 +76,11 @@ fun HabitCard(
 
 				// The Text Counter
 				Text(
-					text = if (isFinished) "${state.progress} / ${habit.target} ${habit.unit} - ${stringResource(R.string.dashboard_completed)}!"
+					text = if (isFinished) "${state.progress} / ${habit.target} ${habit.unit} - ${
+						stringResource(
+							R.string.dashboard_completed
+						)
+					}!"
 					else "${state.progress} / ${habit.target} ${habit.unit}",
 
 					style = MaterialTheme.typography.bodySmall,

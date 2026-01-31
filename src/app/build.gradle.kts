@@ -6,13 +6,11 @@ plugins {
 
 android {
 	namespace = "cz.janfranek.momentum"
-	compileSdk {
-		version = release(36)
-	}
+	compileSdk = 36
 
 	defaultConfig {
 		applicationId = "cz.janfranek.momentum"
-		minSdk = 34
+		minSdk = 26
 		targetSdk = 36
 		versionCode = 1
 		versionName = "1.0"

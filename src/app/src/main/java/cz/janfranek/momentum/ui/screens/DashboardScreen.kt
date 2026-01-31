@@ -22,7 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import cz.janfranek.momentum.R
 import cz.janfranek.momentum.data.HabitType
 import cz.janfranek.momentum.ui.components.HabitCard
-import cz.janfranek.momentum.ui.viewmodel.HabitViewModel
+import cz.janfranek.momentum.ui.viewmodel.DashboardViewModel
 
 /**
  * The main dashboard screen displaying habits.
@@ -40,14 +40,14 @@ import cz.janfranek.momentum.ui.viewmodel.HabitViewModel
 @OptIn(ExperimentalMaterial3Api::class) // Needed for TopAppBar in some versions
 @Composable
 fun DashboardScreen(
-	viewModel: HabitViewModel,
+	viewModel: DashboardViewModel,
 	onAddHabitClick: () -> Unit,
 	onHabitClick: (Int) -> Unit
 ) {
 	val habits by viewModel.uiState.collectAsState()
 
 	// 0 = Daily, 1 = Weekly
-	var selectedTabIndex by remember { mutableIntStateOf(0) }
+	var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
 
 	// Filter the list based on the selected tab
 	val visibleHabits = habits.filter {

@@ -10,8 +10,8 @@ import androidx.room.RoomDatabase
  */
 @Database(entities = [Habit::class, HabitEntry::class], version = 1, exportSchema = false)
 abstract class MomentumDatabase : RoomDatabase() {
-
 	abstract fun habitDao(): HabitDao
+	abstract fun habitEntryDao(): HabitEntryDao
 
 	companion object {
 		@Volatile
